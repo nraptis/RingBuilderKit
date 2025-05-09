@@ -8,7 +8,7 @@
 import Foundation
 import MathKit
 
-class RingBuilderWeightSegment: MathKit.PrecomputedLineSegment {
+class RingBuilderWeightSegment: PrecomputedLineSegment {
     
     var isIllegal = false
     var isBucketed = false

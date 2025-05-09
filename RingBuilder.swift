@@ -7,7 +7,6 @@
 
 import Foundation
 import MathKit
-import TriangleKit
 import SplineReducerKit
 
 public class RingBuilder {
@@ -24,12 +23,12 @@ public class RingBuilder {
     static let erodeCount = 3
     static let dilateCount = 3
     
-    typealias Point = MathKit.Math.Point
-    typealias Vector = MathKit.Math.Vector
+    typealias Point = Math.Point
+    typealias Vector = Math.Vector
     
     var splines = [ManualSpline]()
     
-    let smoothingPath = MathKit.OutlinePath()
+    let smoothingPath = OutlinePath()
 
     var _registerDistance = Float(2.0)
     var _registerDistanceSquared = Float(2.0)
@@ -116,7 +115,7 @@ public class RingBuilder {
         
     }
     
-    public func compute_PartA(borderTool: MathKit.BorderTool,
+    public func compute_PartA(borderTool: BorderTool,
                        angle: Float,
                        jiggleRotation: Float,
                        worldScale: Float,
@@ -171,9 +170,10 @@ public class RingBuilder {
     }
     
     public func compute_PartB(magnitude: Float,
-                       numberOfRings: Int,
-                       deviceFactor: Float,
-                       splineReducer: SplineReducerKit.StochasticSplineReducer) async {
+                              numberOfRings: Int,
+                              deviceFactor: Float,
+                              splineReducer: SplineReducerKit.StochasticSplineReducer,
+                              splineThresholdDistance: Float) async {
         
         computeResult.numberOfRingsRequested = numberOfRings
         //computeResult.numberOfRingsGenerated = 0
@@ -196,7 +196,7 @@ public class RingBuilder {
             
             if ringIndex > 0 {
                 
-                await _intakeLastSpline()
+                await _intakeLastSpline(splineThresholdDistance: splineThresholdDistance)
                 
             }
             
@@ -293,7 +293,7 @@ public class RingBuilder {
         return computeResult
     }
     
-    private func _intakeLastSpline() async {
+    private func _intakeLastSpline(splineThresholdDistance: Float) async {
         
         if splines.count > 0 {
             
@@ -309,7 +309,7 @@ public class RingBuilder {
                 position += 0.01
             }
             
-            outlinePath.solve(step: TriangleKit.PolyMeshConstants.splineThresholdDistance,
+            outlinePath.solve(step: splineThresholdDistance,
                               skipFirstPoint: false,
                               skipLastPoint: false)
             
@@ -388,7 +388,7 @@ public class RingBuilder {
     
     private func getReducedSpline(deviceFactor: Float,
                                   splineReducer: SplineReducerKit.StochasticSplineReducer) async -> ManualSpline {
-        let inputSpline = MathKit.ManualSpline()
+        let inputSpline = ManualSpline()
         inputSpline.removeAll(keepingCapacity: true)
         let outlinePathCount1 = (outlinePath.count - 1)
         for outlineIndex in 0..<outlinePathCount1 {
@@ -398,7 +398,7 @@ public class RingBuilder {
         }
         
         inputSpline.solve(closed: true)
-        let outputSpline = MathKit.ManualSpline()
+        let outputSpline = ManualSpline()
         
         let commandScale = deviceFactor * worldScale
         
@@ -432,7 +432,7 @@ public class RingBuilder {
         return outputSpline
     }
     
-    func deriveBasePointsFromRingBuilder(edgePointList: MathKit.IntPointList, ringBuilderGrid: RingBuilderGrid) -> Bool {
+    func deriveBasePointsFromRingBuilder(edgePointList: IntPointList, ringBuilderGrid: RingBuilderGrid) -> Bool {
         
         if ringBuilderGrid.edgePointList.count < 8 {
             return false

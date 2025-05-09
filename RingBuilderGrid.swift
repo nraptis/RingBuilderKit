@@ -246,7 +246,7 @@ class RingBuilderGrid {
                     if node.ringBuilderWeightSegmentCount >= Self.segmentsPerNode { break }
                 }
                 
-                if bestDistanceSquared > MathKit.Math.epsilon {
+                if bestDistanceSquared > Math.epsilon {
                     let distance = sqrtf(bestDistanceSquared)
                     node.distanceFromEdge = distance
                 } else {
@@ -574,7 +574,7 @@ class RingBuilderGrid {
                                 }
                             }
                             
-                            if bestDistanceSquared > MathKit.Math.epsilon {
+                            if bestDistanceSquared > Math.epsilon {
                                 let distance = sqrtf(bestDistanceSquared)
                                 gridHiFi[indexH][indexV].distanceFromEdge = distance
                             } else {
@@ -607,7 +607,7 @@ class RingBuilderGrid {
             indexV += 1
         }
         
-        if maximumDistanceFromEdgeHiFi > MathKit.Math.epsilon {
+        if maximumDistanceFromEdgeHiFi > Math.epsilon {
             indexV = 1
             while indexV < countVHiFi {
                 indexH = 1
@@ -677,7 +677,7 @@ class RingBuilderGrid {
                     let diffX = (x - centroidXHiFi)
                     let diffY = (y - centroidYHiFi)
                     let distanceSquared = (diffX * diffX) + (diffY * diffY)
-                    if distanceSquared > MathKit.Math.epsilon {
+                    if distanceSquared > Math.epsilon {
                         let distance = sqrtf(distanceSquared)
                         gridHiFi[indexH][indexV].distanceFromCentroid = distance
                         if distance > maximumDistance {
@@ -692,7 +692,7 @@ class RingBuilderGrid {
             indexV += 1
         }
         
-        if maximumDistance > MathKit.Math.epsilon {
+        if maximumDistance > Math.epsilon {
             indexV = 0
             while indexV < countVHiFi {
                 indexH = 0
@@ -750,7 +750,7 @@ class RingBuilderGrid {
                         let diffX = (centroidXHiFi - x)
                         let diffY = (centroidYHiFi - y)
                         let distanceSquared = (diffX * diffX) + (diffY * diffY)
-                        if distanceSquared > MathKit.Math.epsilon {
+                        if distanceSquared > Math.epsilon {
                             let distance = sqrtf(distanceSquared)
                             let swivel = -atan2(diffX, diffY) - angle
                             let dirX = sinf(swivel)
@@ -814,7 +814,7 @@ class RingBuilderGrid {
             
             let rangeX = maxX - minX
             let rangeY = maxY - minY
-            if rangeX > MathKit.Math.epsilon && rangeY > MathKit.Math.epsilon {
+            if rangeX > Math.epsilon && rangeY > Math.epsilon {
                 indexV = 0
                 while indexV < countVHiFi {
                     indexH = 0
