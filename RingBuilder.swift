@@ -26,7 +26,7 @@ public class RingBuilder {
     typealias Point = Math.Point
     typealias Vector = Math.Vector
     
-    var splines = [ManualSpline]()
+    var splines = [FancySpline]()
     
     let smoothingPath = OutlinePath()
 
@@ -282,7 +282,7 @@ public class RingBuilder {
         }
     }
     
-    public typealias CreateGuidesHandle = ([ManualSpline],
+    public typealias CreateGuidesHandle = ([FancySpline],
                      Bool,
                      Bool) -> RingBuilderKit.AttemptCreateGuidesFromSplinesResult
     
@@ -387,8 +387,8 @@ public class RingBuilder {
     }
     
     private func getReducedSpline(deviceFactor: Float,
-                                  splineReducer: SplineReducerKit.StochasticSplineReducer) async -> ManualSpline {
-        let inputSpline = ManualSpline()
+                                  splineReducer: SplineReducerKit.StochasticSplineReducer) async -> FancySpline {
+        let inputSpline = FancySpline()
         inputSpline.removeAll(keepingCapacity: true)
         let outlinePathCount1 = (outlinePath.count - 1)
         for outlineIndex in 0..<outlinePathCount1 {
@@ -398,7 +398,7 @@ public class RingBuilder {
         }
         
         inputSpline.solve(closed: true)
-        let outputSpline = ManualSpline()
+        let outputSpline = FancySpline()
         
         let commandScale = deviceFactor * worldScale
         
